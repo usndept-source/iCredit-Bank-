@@ -13,6 +13,10 @@ interface State {
 export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
   public state: State = { hasError: false };
 
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+  }
+
   public static getDerivedStateFromError(_: Error): State {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
