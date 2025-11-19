@@ -25,7 +25,7 @@ import { CryptoDashboard } from './components/CryptoDashboard.tsx';
 import { ServicesDashboard } from './components/ServicesDashboard.tsx';
 import { TravelCheckIn } from './components/TravelCheckIn.tsx';
 import { PlatformFeatures } from './components/PlatformFeatures.tsx';
-// FIX: Updated import casing to match the PascalCase file system expectation.
+// FIX: Updated import casing to match the file 'Tasks.tsx'.
 import { Tasks } from './components/Tasks.tsx';
 import { Flights } from './components/Flights.tsx';
 import { Utilities } from './components/Utilities.tsx';
@@ -401,18 +401,20 @@ export const App: React.FC = () => {
           let nextStatus: TransactionStatus | null = null;
           let nextTimestamp: Date | undefined = now;
 
-          if (tx.status === TransactionStatus.SUBMITTED && elapsedSeconds > 4) {
+          // Accelerated simulation for demo purposes
+          if (tx.status === TransactionStatus.SUBMITTED && elapsedSeconds > 2) {
+              // Force flagged state for transactions requiring auth (demo mode)
               nextStatus = tx.requiresAuth ? TransactionStatus.FLAGGED_AWAITING_CLEARANCE : TransactionStatus.CONVERTING;
-          } else if (tx.status === TransactionStatus.CONVERTING && elapsedSeconds > 8) {
+          } else if (tx.status === TransactionStatus.CONVERTING && elapsedSeconds > 5) {
               nextStatus = TransactionStatus.IN_TRANSIT;
-          } else if (tx.status === TransactionStatus.IN_TRANSIT && elapsedSeconds > 15) {
+          } else if (tx.status === TransactionStatus.IN_TRANSIT && elapsedSeconds > 10) {
               nextStatus = TransactionStatus.FUNDS_ARRIVED;
               if (pushNotificationSettings.transactions) {
                   addNotification(NotificationType.TRANSACTION, 'Funds Arrived', `Your transfer to ${tx.recipient.fullName} has arrived.`);
               }
               const {subject, body} = generateFundsArrivedEmail(tx, userProfile.name);
               if (privacySettings.email.transactions) sendTransactionalEmail(userProfile.email, subject, body);
-          } else if (tx.status === TransactionStatus.CLEARANCE_GRANTED && elapsedSeconds > (tx.statusTimestamps[TransactionStatus.CLEARANCE_GRANTED]!.getTime() - submittedTime) / 1000 + 4) {
+          } else if (tx.status === TransactionStatus.CLEARANCE_GRANTED && elapsedSeconds > (tx.statusTimestamps[TransactionStatus.CLEARANCE_GRANTED]!.getTime() - submittedTime) / 1000 + 3) {
               nextStatus = TransactionStatus.IN_TRANSIT;
           } else {
               nextTimestamp = undefined;
@@ -428,7 +430,7 @@ export const App: React.FC = () => {
           return tx;
         })
       );
-    }, 2000); // Check for updates every 2 seconds
+    }, 1000); // Check every second for faster updates
 
     return () => clearInterval(interval);
   }, [addNotification, pushNotificationSettings, privacySettings, userProfile]);
@@ -875,6 +877,8 @@ export const App: React.FC = () => {
                   cardTransactions={cardTransactions}
                   budgetLimits={budgetLimits}
                   onUpdateBudgetLimits={onUpdateBudgetLimits}
+                  onOpenSendMoneyFlow={onOpenSendMoneyFlow}
+                  onOpenWireTransfer={onOpenWireTransfer}
                />;
       case 'recipients':
         return <Recipients recipients={recipients} addRecipient={addRecipient} onUpdateRecipient={onUpdateRecipient} />;

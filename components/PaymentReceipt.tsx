@@ -1,20 +1,21 @@
+
 import React, { useState, useEffect } from 'react';
-import { Transaction, Account, TransactionStatus } from '../types';
-import { USER_PROFILE } from '../constants';
-import { LiveTransactionView } from './LiveTransactionView';
+import { Transaction, Account, TransactionStatus } from '../types.ts';
+import { USER_PROFILE } from '../constants.ts';
+import { LiveTransactionView } from './LiveTransactionView.tsx';
 import { 
     CheckCircleIcon, 
     ArrowDownTrayIcon, 
-    ArrowPathIcon,
-    ArrowRightIcon,
-    ClipboardDocumentIcon,
-    SpinnerIcon,
-    ICreditUnionLogo,
-    ScaleIcon
-} from './Icons';
-import { AuthorizationWarningModal } from './AuthorizationWarningModal';
-import { DownloadableReceipt } from './DownloadableReceipt';
-import { timeSince } from '../utils/time';
+    ArrowPathIcon, 
+    ArrowRightIcon, 
+    ClipboardDocumentIcon, 
+    SpinnerIcon, 
+    ICreditUnionLogo, 
+    ScaleIcon 
+} from './Icons.tsx';
+import { AuthorizationWarningModal } from './AuthorizationWarningModal.tsx';
+import { DownloadableReceipt } from './DownloadableReceipt.tsx';
+import { timeSince } from '../utils/time.ts';
 
 declare const html2canvas: any;
 declare const jspdf: any;
@@ -52,9 +53,12 @@ export const PaymentReceipt: React.FC<PaymentReceiptProps> = ({ transaction, sou
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
 
     useEffect(() => {
-        if (transaction.status === TransactionStatus.IN_TRANSIT) {
+        if (transaction.status === TransactionStatus.FLAGGED_AWAITING_CLEARANCE) {
+             setShowAuthWarning(true);
+        } else if (transaction.status === TransactionStatus.IN_TRANSIT) {
+             // Optional: Simulate a delayed flag, but mainly rely on the status from App.tsx
              const timer = setTimeout(() => {
-                setShowAuthWarning(true);
+                // setShowAuthWarning(true); 
             }, 2000);
             return () => clearTimeout(timer);
         } else {
