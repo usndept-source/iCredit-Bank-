@@ -1,4 +1,5 @@
 
+
 import React, { ErrorInfo, ReactNode } from 'react';
 import { ICreditUnionLogo } from './Icons.tsx';
 
@@ -52,6 +53,6 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
       );
     }
 
-    return this.props.children;
+    return (this.props as any).children;
   }
 }

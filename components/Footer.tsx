@@ -16,7 +16,7 @@ import { LEGAL_CONTENT } from '../constants.ts';
 interface FooterProps {
     setActiveView: (view: View) => void;
     onOpenSendMoneyFlow: (initialTab?: 'send' | 'split' | 'deposit') => void;
-    openLegalModal: (title: string; content: string) => void;
+    openLegalModal: (title: string, content: string) => void;
 }
 
 interface DownloadButtonProps {
