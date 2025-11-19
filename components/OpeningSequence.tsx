@@ -21,7 +21,7 @@ export const OpeningSequence: React.FC<OpeningSequenceProps> = ({ onComplete }) 
     const [messageIndex, setMessageIndex] = useState(0);
 
     useEffect(() => {
-        const totalDuration = 1000; // Drastically reduced from 2500
+        const totalDuration = 100; // Extremely fast duration
         // Cycle through messages
         const messageInterval = setInterval(() => {
             setMessageIndex(prev => {
@@ -49,7 +49,7 @@ export const OpeningSequence: React.FC<OpeningSequenceProps> = ({ onComplete }) 
         if (phase === 'success') {
             const completeTimer = setTimeout(() => {
                 onComplete();
-            }, 400); // Reduced from 800
+            }, 100); // Instant transition
             return () => clearTimeout(completeTimer);
         }
     }, [phase, onComplete]);
@@ -58,14 +58,14 @@ export const OpeningSequence: React.FC<OpeningSequenceProps> = ({ onComplete }) 
         <div className="fixed inset-0 bg-slate-800/90 flex flex-col items-center justify-center text-white z-[100] overflow-hidden">
             <div className="w-80 h-80" style={{ perspective: '1200px' }}>
                 <div 
-                    className="relative w-full h-full transition-transform duration-[400ms] ease-in-out" 
+                    className="relative w-full h-full transition-transform duration-[200ms] ease-in-out" 
                     style={{ transformStyle: 'preserve-3d', transform: phase === 'success' ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
                 >
                     {/* Front side: Loading animation */}
                     <div className="absolute w-full h-full flex flex-col items-center justify-center text-center p-4" style={{ backfaceVisibility: 'hidden' }}>
                         <div className="relative w-32 h-32">
                             <div className="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
-                            <div className="absolute inset-0 border-4 border-primary/50 rounded-full animate-spin [animation-duration:1s]"></div>
+                            <div className="absolute inset-0 border-4 border-primary/50 rounded-full animate-spin [animation-duration:0.5s]"></div>
                             <div className="absolute inset-4 flex items-center justify-center">
                                 <ICreditUnionLogo />
                             </div>

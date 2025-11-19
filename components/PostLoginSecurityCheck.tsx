@@ -47,7 +47,7 @@ const SecurityModule: React.FC<{
             // Scan duration reduced significantly
             scanTimer = setTimeout(() => {
                 setInternalStatus('verified');
-            }, 300 + Math.random() * 200); 
+            }, 50 + Math.random() * 50); // Was 300 + random
         }, delay);
 
         return () => {
@@ -88,7 +88,7 @@ export const PostLoginSecurityCheck: React.FC<PostLoginSecurityCheckProps> = ({ 
     
     // Initial setup
     useEffect(() => {
-        const totalDuration = 1200; // Drastically reduced from 2600
+        const totalDuration = 100; // Drastically reduced from 1200 for instant feel
         const logIntervalTime = totalDuration / SYSTEM_LOGS.length;
 
         // Progress Bar Animation
@@ -98,9 +98,9 @@ export const PostLoginSecurityCheck: React.FC<PostLoginSecurityCheckProps> = ({ 
                     clearInterval(progressInterval);
                     return 100;
                 }
-                return prev + 2; // Faster increment
+                return prev + 10; // Faster increment
             });
-        }, totalDuration / 50);
+        }, totalDuration / 20);
 
         // Log Stream Animation
         let currentLogIndex = 0;
@@ -116,7 +116,7 @@ export const PostLoginSecurityCheck: React.FC<PostLoginSecurityCheckProps> = ({ 
         // Final Completion Trigger
         const completionTimer = setTimeout(() => {
             onComplete();
-        }, totalDuration + 100); // Very short buffer
+        }, totalDuration + 50); // Very short buffer
 
         return () => {
             clearInterval(progressInterval);
@@ -155,25 +155,25 @@ export const PostLoginSecurityCheck: React.FC<PostLoginSecurityCheckProps> = ({ 
                             icon={<LockClosedIcon className="w-5 h-5" />} 
                             label="Encryption & Protocols" 
                             status="pending" 
-                            delay={50} 
+                            delay={10} 
                         />
                         <SecurityModule 
                             icon={<GlobeAmericasIcon className="w-5 h-5" />} 
                             label="Network & Geofencing" 
                             status="pending" 
-                            delay={300} 
+                            delay={30} 
                         />
                         <SecurityModule 
                             icon={<DevicePhoneMobileIcon className="w-5 h-5" />} 
                             label="Device Fingerprinting" 
                             status="pending" 
-                            delay={600} 
+                            delay={60} 
                         />
                         <SecurityModule 
                             icon={<ServerIcon className="w-5 h-5" />} 
                             label="Account Synchronization" 
                             status="pending" 
-                            delay={900} 
+                            delay={90} 
                         />
                     </div>
                 </div>

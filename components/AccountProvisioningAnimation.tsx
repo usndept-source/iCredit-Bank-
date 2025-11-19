@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 // FIX: Add missing icons
 import { SpinnerIcon, CheckCircleIcon, ShieldCheckIcon, GlobeAltIcon, BankIcon, DocumentCheckIcon } from './Icons.tsx';
@@ -20,12 +21,12 @@ export const AccountProvisioningAnimation: React.FC<AccountProvisioningAnimation
     useEffect(() => {
         const processNextStep = () => {
             if (currentStep < provisioningSteps.length - 1) {
-                const delay = currentStep === 1 ? 2000 : 1000; // Longer delay for "compliance checks"
+                const delay = currentStep === 1 ? 300 : 150; // Was 2000 : 1000
                 setTimeout(() => {
                     setCurrentStep(prev => prev + 1);
                 }, delay);
             } else {
-                setTimeout(onComplete, 1500); // Wait a bit on the final success message
+                setTimeout(onComplete, 200); // Was 1500
             }
         };
 

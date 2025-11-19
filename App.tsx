@@ -25,8 +25,8 @@ import { CryptoDashboard } from './components/CryptoDashboard.tsx';
 import { ServicesDashboard } from './components/ServicesDashboard.tsx';
 import { TravelCheckIn } from './components/TravelCheckIn.tsx';
 import { PlatformFeatures } from './components/PlatformFeatures.tsx';
-// FIX: Updated import casing to match the file 'Tasks.tsx'.
-import { Tasks } from './components/Tasks.tsx';
+// FIX: Updated import to tasks.tsx (camelCase) to match file name found by compiler and fix casing error
+import { Tasks } from './components/tasks.tsx';
 import { Flights } from './components/Flights.tsx';
 import { Utilities } from './components/Utilities.tsx';
 import { Integrations } from './components/Integrations.tsx';
@@ -680,8 +680,8 @@ export const App: React.FC = () => {
             sendTransactionalEmail(formData.email, welcomeSubject, welcomeBody);
             
             setLoginState('logged_in');
-        }, 3000);
-    }, 5000);
+        }, 100); // Was 3000
+    }, 500); // Was 5000
   };
   
   const handleLogin = () => {

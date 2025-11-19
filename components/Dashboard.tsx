@@ -12,7 +12,10 @@ import {
     PencilIcon,
     WalletIcon,
     GlobeAmericasIcon,
-    ArrowPathIcon
+    ArrowPathIcon,
+    LockClosedIcon,
+    DocumentCheckIcon,
+    BankIcon
 } from './Icons.tsx';
 import { AccountCarousel } from './AccountCarousel.tsx';
 import { QuickTransfer } from './QuickTransfer.tsx';
@@ -62,45 +65,96 @@ const DashboardTransactionRow: React.FC<{ tx: Transaction }> = ({ tx }) => {
 };
 
 const AdvancedAnalyticsWidget: React.FC = () => {
+    const [period, setPeriod] = useState('Month');
+
     return (
-        <div className="bg-slate-800/60 backdrop-blur-md rounded-3xl border border-white/5 p-6 shadow-lg relative overflow-hidden group">
-            <div className="flex justify-between items-start mb-6 relative z-10">
+        <div className="mt-8 pt-8 border-t border-white/5">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                 <div>
                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
                         <ChartBarIcon className="w-5 h-5 text-primary-400" />
                         Cash Flow Analytics
                     </h3>
-                    <p className="text-xs text-slate-400 mt-1">Income vs. Expense (Last 30 Days)</p>
+                    <p className="text-xs text-slate-400 mt-1">Comprehensive view of your financial movements</p>
                 </div>
-                <div className="bg-white/5 px-3 py-1 rounded-full text-xs font-medium text-slate-300 border border-white/5">
-                    +12.5% Net
+                <div className="flex bg-slate-800/50 rounded-lg p-1 border border-white/10">
+                    {['Week', 'Month', 'Year'].map((p) => (
+                        <button
+                            key={p}
+                            onClick={() => setPeriod(p)}
+                            className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${
+                                period === p 
+                                ? 'bg-white/10 text-white shadow-sm' 
+                                : 'text-slate-400 hover:text-slate-200'
+                            }`}
+                        >
+                            {p}
+                        </button>
+                    ))}
                 </div>
             </div>
 
-            {/* Mock Chart Visualization */}
-            <div className="relative h-40 w-full flex items-end justify-between gap-2 px-1">
-                {[45, 70, 35, 60, 85, 55, 90, 40, 65, 30, 75, 50].map((h, i) => (
-                    <div key={i} className="w-full bg-slate-700/30 rounded-t-sm relative group-hover:bg-slate-700/50 transition-colors">
-                        <div 
-                            className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary-600 to-primary-400 opacity-80 rounded-t-sm transition-all duration-1000" 
-                            style={{ height: `${h}%` }}
-                        ></div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Stats Column */}
+                <div className="space-y-4">
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 flex justify-between items-center">
+                        <div>
+                            <p className="text-xs text-emerald-400 font-semibold uppercase tracking-wider">Total Income</p>
+                            <p className="text-xl font-bold text-white mt-1">$14,250.00</p>
+                        </div>
+                        <div className="h-10 w-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                             <TrendingUpIcon className="w-5 h-5" />
+                        </div>
                     </div>
-                ))}
-                {/* Trend Line Overlay */}
-                <svg className="absolute inset-0 w-full h-full overflow-visible pointer-events-none opacity-50" preserveAspectRatio="none">
-                    <path d="M0 100 Q 30 80, 60 120 T 120 60 T 180 100 T 240 40 T 300 80" fill="none" stroke="#34d399" strokeWidth="2" className="drop-shadow-md" />
-                </svg>
+                    <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex justify-between items-center">
+                        <div>
+                            <p className="text-xs text-red-400 font-semibold uppercase tracking-wider">Total Expenses</p>
+                            <p className="text-xl font-bold text-white mt-1">$4,120.50</p>
+                        </div>
+                         <div className="h-10 w-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-400">
+                            <TrendingUpIcon className="w-5 h-5 transform rotate-180" />
+                        </div>
+                    </div>
+                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 flex justify-between items-center">
+                        <div>
+                            <p className="text-xs text-blue-400 font-semibold uppercase tracking-wider">Net Savings</p>
+                            <p className="text-xl font-bold text-white mt-1">$10,129.50</p>
+                        </div>
+                         <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                            <BankIcon className="w-5 h-5" />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Chart Column */}
+                <div className="lg:col-span-2 bg-slate-800/40 rounded-xl border border-white/5 p-5 relative overflow-hidden group/chart">
+                     {/* Grid Background */}
+                     <div className="absolute inset-0 opacity-20 pointer-events-none">
+                         <div className="h-full w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:16px_16px]"></div>
+                     </div>
+
+                     <div className="h-52 flex items-end justify-between gap-3 px-2 relative z-10">
+                        {/* Bars representing daily/weekly flow */}
+                        {[60, 45, 75, 50, 80, 65, 90, 55, 70, 40, 85, 60, 95, 70, 50].map((h, i) => (
+                            <div key={i} className="w-full flex flex-col justify-end gap-1 h-full group/bar relative">
+                                {/* Tooltip Simulation */}
+                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover/bar:opacity-100 transition-opacity bg-slate-900 text-xs text-white px-2 py-1 rounded shadow-lg whitespace-nowrap pointer-events-none z-20">
+                                    In: ${h * 100} | Out: ${h * 50}
+                                </div>
+                                
+                                <div className="w-full bg-emerald-500/80 rounded-sm transition-all duration-500 group-hover/bar:bg-emerald-400" style={{ height: `${h * 0.6}%` }}></div>
+                                <div className="w-full bg-red-500/80 rounded-sm transition-all duration-500 group-hover/bar:bg-red-400" style={{ height: `${h * 0.25}%` }}></div>
+                            </div>
+                        ))}
+                     </div>
+                     
+                     <div className="flex justify-between mt-4 text-xs text-slate-500 font-mono px-2 border-t border-white/5 pt-2">
+                        <span>01 {period}</span>
+                        <span>15 {period}</span>
+                        <span>30 {period}</span>
+                     </div>
+                </div>
             </div>
-            
-            <div className="flex justify-between mt-4 text-xs text-slate-400 font-mono relative z-10">
-                <span>01 Nov</span>
-                <span>15 Nov</span>
-                <span>30 Nov</span>
-            </div>
-            
-            {/* Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-primary-600/20 blur-[50px] rounded-full pointer-events-none"></div>
         </div>
     );
 };
@@ -233,115 +287,134 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       )}
 
-      {/* Hero Grid: Net Worth & Quick Stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* Main Net Worth Card */}
-        <div className="lg:col-span-2 relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800 to-slate-900 border border-white/5 shadow-2xl group">
-             {/* Abstract Background Elements */}
-             <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity duration-700"></div>
-             <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl opacity-30"></div>
-             
-             <div className="relative z-10 p-8 h-full flex flex-col justify-between">
-                <div className="flex justify-between items-start">
-                    <div>
-                        <h2 className="text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-1">Total Net Worth</h2>
-                        <div className="flex items-baseline gap-3">
-                            <span className={`text-5xl sm:text-6xl font-bold text-white tracking-tight transition-all duration-500 ${isBalanceVisible ? '' : 'blur-lg select-none'}`}>
-                                {isBalanceVisible ? totalNetWorth.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '$ 2,450,120.00'}
-                            </span>
-                             <button 
-                                onClick={() => setIsBalanceVisible(!isBalanceVisible)} 
-                                className="text-slate-500 hover:text-white transition-colors p-1 rounded-full hover:bg-white/5"
-                                aria-label={isBalanceVisible ? "Hide balance" : "Show balance"}
-                            >
-                                {isBalanceVisible ? <EyeSlashIcon className="w-6 h-6" /> : <EyeIcon className="w-6 h-6" />}
-                            </button>
-                        </div>
-                    </div>
-                    <div className="hidden sm:block">
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-xs font-bold">
-                            <TrendingUpIcon className="w-3 h-3" />
-                            <span>+{portfolioChange24h}% (24h)</span>
-                        </div>
-                    </div>
-                </div>
+      {/* Unified My Accounts & Wealth Section - REFACTORED */}
+      <section aria-label="Financial Overview" className="animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+          <div className="bg-slate-900/60 backdrop-blur-2xl rounded-[2.5rem] border border-white/5 p-8 shadow-2xl relative overflow-hidden group">
+              
+              {/* Decorative Background */}
+              <div className="absolute top-0 right-0 -mr-32 -mt-32 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none"></div>
 
-                <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-white/5">
-                     <div>
-                        <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Liquidity</p>
-                        <p className="text-lg font-bold text-slate-200 font-mono mt-1">
-                            {isBalanceVisible ? accounts.reduce((acc, curr) => acc + curr.balance, 0).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }) : '••••••'}
-                        </p>
-                     </div>
-                     <div>
-                        <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Digital Assets</p>
-                        <p className="text-lg font-bold text-slate-200 font-mono mt-1">
-                             {isBalanceVisible ? (totalNetWorth - accounts.reduce((acc, curr) => acc + curr.balance, 0)).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }) : '••••••'}
-                        </p>
-                     </div>
-                     <div>
-                        <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Available Credit</p>
-                        <p className="text-lg font-bold text-slate-200 font-mono mt-1">$45,000</p>
-                     </div>
-                      <div>
-                        <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Reward Points</p>
-                        <p className="text-lg font-bold text-primary-300 font-mono mt-1">84,250</p>
-                     </div>
-                </div>
-             </div>
-        </div>
+              {/* Top Grid: Net Worth & Health */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10 relative z-10">
+                  
+                  {/* Net Worth Panel */}
+                  <div className="lg:col-span-2 flex flex-col justify-between">
+                      <div className="flex justify-between items-start">
+                          <div>
+                              <h2 className="text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-2 flex items-center gap-2">
+                                  <ChartBarIcon className="w-4 h-4" /> Total Net Worth
+                              </h2>
+                              <div className="flex items-baseline gap-4">
+                                  <span className={`text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400 tracking-tight transition-all duration-500 ${isBalanceVisible ? '' : 'blur-xl select-none'}`}>
+                                      {isBalanceVisible ? totalNetWorth.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '$ 2,450,120.00'}
+                                  </span>
+                                   <button 
+                                      onClick={() => setIsBalanceVisible(!isBalanceVisible)} 
+                                      className="text-slate-500 hover:text-white transition-colors p-1.5 rounded-full hover:bg-white/5"
+                                      aria-label={isBalanceVisible ? "Hide balance" : "Show balance"}
+                                  >
+                                      {isBalanceVisible ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
+                                  </button>
+                              </div>
+                              <div className="flex items-center gap-3 mt-2">
+                                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-md text-emerald-400 text-xs font-bold">
+                                      <TrendingUpIcon className="w-3 h-3" />
+                                      <span>+{portfolioChange24h}%</span>
+                                  </div>
+                                  <span className="text-xs text-slate-500 font-medium">vs. last 24h</span>
+                              </div>
+                          </div>
+                      </div>
 
-        {/* Credit Score & Health Card */}
-        <div className="lg:col-span-1 bg-slate-800/60 backdrop-blur-md rounded-3xl p-8 border border-white/5 shadow-xl flex flex-col justify-between relative overflow-hidden">
-             <div className="relative z-10">
-                 <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-slate-400 text-xs font-bold uppercase tracking-wider">Financial Health</h3>
-                    <ShieldCheckIcon className="w-5 h-5 text-emerald-400" />
-                 </div>
-                 <div className="flex items-end gap-3">
-                    <span className="text-6xl font-black text-white">812</span>
-                    <span className="text-lg font-bold text-emerald-400 mb-2">Excellent</span>
-                 </div>
-                 <p className="text-xs text-slate-500 mt-2">Last updated: Today via Equifax</p>
-             </div>
+                      <div className="mt-8 grid grid-cols-3 gap-4">
+                           <div className="bg-white/5 rounded-xl p-3 border border-white/5">
+                              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Assets</p>
+                              <p className="text-lg font-mono font-bold text-slate-200 mt-1">
+                                  {isBalanceVisible ? (totalNetWorth * 1.05).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }) : '••••••'}
+                              </p>
+                              <div className="w-full bg-slate-700/50 h-1 mt-2 rounded-full overflow-hidden">
+                                  <div className="bg-emerald-500 h-full w-[90%]"></div>
+                              </div>
+                           </div>
+                           <div className="bg-white/5 rounded-xl p-3 border border-white/5">
+                              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Liabilities</p>
+                              <p className="text-lg font-mono font-bold text-slate-200 mt-1">
+                                  {isBalanceVisible ? (totalNetWorth * 0.05).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }) : '••••••'}
+                              </p>
+                               <div className="w-full bg-slate-700/50 h-1 mt-2 rounded-full overflow-hidden">
+                                  <div className="bg-amber-500 h-full w-[15%]"></div>
+                              </div>
+                           </div>
+                           <div className="bg-white/5 rounded-xl p-3 border border-white/5">
+                              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Monthly Flow</p>
+                              <p className="text-lg font-mono font-bold text-green-400 mt-1">+$12,450</p>
+                               <div className="w-full bg-slate-700/50 h-1 mt-2 rounded-full overflow-hidden">
+                                  <div className="bg-primary h-full w-[65%]"></div>
+                              </div>
+                           </div>
+                      </div>
+                  </div>
 
-             <div className="relative z-10 mt-6">
-                 <div className="flex justify-between text-xs text-slate-400 mb-2 font-medium">
-                    <span>Utilization</span>
-                    <span>12%</span>
-                 </div>
-                 <div className="w-full bg-slate-700/50 rounded-full h-2 overflow-hidden">
-                     <div className="bg-gradient-to-r from-emerald-400 to-primary-500 h-full w-[12%] rounded-full"></div>
-                 </div>
-                 <div className="mt-6 p-3 bg-white/5 rounded-xl flex items-center gap-3 border border-white/5 hover:bg-white/10 transition-colors cursor-pointer">
-                    <SparklesIcon className="w-5 h-5 text-yellow-400" />
-                    <div>
-                        <p className="text-xs font-bold text-slate-200">AI Insight</p>
-                        <p className="text-[10px] text-slate-400">Your spending is 5% lower than last month.</p>
-                    </div>
-                 </div>
-             </div>
-             
-             {/* Decorative background blur */}
-             <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-emerald-500/20 rounded-full blur-3xl"></div>
-        </div>
-      </div>
+                  {/* Financial Health Panel */}
+                  <div className="lg:col-span-1 bg-black/20 rounded-2xl p-6 border border-white/5 flex flex-col justify-center relative overflow-hidden">
+                       <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+                       
+                       <div className="flex items-center justify-between mb-4 relative z-10">
+                          <h3 className="text-slate-300 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                              <ShieldCheckIcon className="w-4 h-4 text-emerald-400" /> Financial Health
+                          </h3>
+                          <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">A+</span>
+                       </div>
+                       
+                       <div className="flex items-end gap-3 mb-4 relative z-10">
+                          <span className="text-5xl font-black text-white">812</span>
+                          <div className="mb-1">
+                              <p className="text-sm font-bold text-emerald-400">Excellent</p>
+                              <p className="text-[10px] text-slate-500">Updated Today</p>
+                          </div>
+                       </div>
 
-      {/* My Accounts Section - Moved Top */}
-      <section aria-label="Your Accounts" className="animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-          <div className="flex justify-between items-center mb-4 px-1">
-              <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  <GlobeAmericasIcon className="w-6 h-6 text-primary-400" />
-                  My Accounts
-                  <span className="bg-slate-700 text-slate-300 text-[10px] px-2 py-0.5 rounded-full">{accounts.length}</span>
-              </h3>
-               <div className="flex gap-3">
-                  <button onClick={() => setActiveView('accounts')} className="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-wider bg-white/5 px-3 py-1.5 rounded-full border border-white/5">Manage All</button>
-                  <button onClick={() => onOpenSendMoneyFlow('deposit')} className="text-xs font-bold text-primary-400 hover:text-primary-300 transition-colors uppercase tracking-wider bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">+ Add Funds</button>
+                       <div className="space-y-3 relative z-10">
+                           <div className="flex justify-between text-xs items-center">
+                               <span className="text-slate-400 flex items-center gap-1"><LockClosedIcon className="w-3 h-3"/> Identity Protection</span>
+                               <span className="text-emerald-400 font-bold">Active</span>
+                           </div>
+                           <div className="w-full bg-slate-700/50 rounded-full h-1.5 overflow-hidden">
+                               <div className="bg-emerald-500 h-full w-full animate-pulse"></div>
+                           </div>
+                           <div className="flex justify-between text-xs items-center pt-1">
+                               <span className="text-slate-400 flex items-center gap-1"><DocumentCheckIcon className="w-3 h-3"/> Credit Usage</span>
+                               <span className="text-slate-200 font-mono">12%</span>
+                           </div>
+                           <div className="w-full bg-slate-700/50 rounded-full h-1.5 overflow-hidden">
+                               <div className="bg-blue-500 h-full w-[12%]"></div>
+                           </div>
+                       </div>
+                  </div>
               </div>
+
+              {/* Divider */}
+              <div className="flex items-center gap-4 mb-6 opacity-60">
+                  <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent flex-grow"></div>
+                  <span className="text-xs font-bold uppercase tracking-widest text-slate-500 flex items-center gap-2">
+                      <GlobeAmericasIcon className="w-4 h-4" /> My Accounts
+                  </span>
+                  <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent flex-grow"></div>
+                  <div className="flex gap-2">
+                       <button onClick={() => setActiveView('accounts')} className="text-[10px] font-bold text-slate-400 hover:text-white uppercase border border-white/10 px-2 py-1 rounded bg-white/5">Manage</button>
+                       <button onClick={() => onOpenSendMoneyFlow('deposit')} className="text-[10px] font-bold text-primary-400 hover:text-primary-300 uppercase border border-primary/20 px-2 py-1 rounded bg-primary/10">+ Funds</button>
+                  </div>
+              </div>
+
+              {/* Accounts Carousel Integrated */}
+              <div className="relative">
+                  <AccountCarousel accounts={accounts} isBalanceVisible={isBalanceVisible} setActiveView={setActiveView} />
+              </div>
+
+              {/* Advanced Analytics Widget (MOVED HERE) */}
+              <AdvancedAnalyticsWidget />
           </div>
-          <AccountCarousel accounts={accounts} isBalanceVisible={isBalanceVisible} setActiveView={setActiveView} />
       </section>
 
       {/* Quickteller Hub (Primary Quick Actions) */}
@@ -390,11 +463,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
         {/* Right Column: Actions & Widgets */}
         <div className="xl:col-span-1 space-y-8">
-            {/* Advanced Analytics */}
-            <section>
-                <AdvancedAnalyticsWidget />
-            </section>
-
              {/* Quick Transfer */}
             <section>
                  <h3 className="text-xl font-bold text-white mb-4 px-1">Quick Transfer</h3>
