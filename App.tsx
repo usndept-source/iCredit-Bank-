@@ -1,5 +1,4 @@
 
-
 // FIX: Import `useRef` from React to resolve 'Cannot find name' errors.
 // FIX: Import `useMemo` from React to resolve 'useMemo is not defined' error.
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
@@ -26,8 +25,8 @@ import { CryptoDashboard } from './components/CryptoDashboard.tsx';
 import { ServicesDashboard } from './components/ServicesDashboard.tsx';
 import { TravelCheckIn } from './components/TravelCheckIn.tsx';
 import { PlatformFeatures } from './components/PlatformFeatures.tsx';
-// FIX: Updated import casing to match file system/compiler expectation.
-import { Tasks } from './components/tasks.tsx';
+// FIX: Updated import casing to match the PascalCase file system expectation.
+import { Tasks } from './components/Tasks.tsx';
 import { Flights } from './components/Flights.tsx';
 import { Utilities } from './components/Utilities.tsx';
 import { Integrations } from './components/Integrations.tsx';
@@ -129,7 +128,7 @@ export const App: React.FC = () => {
   const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(false);
 
   // Login & Session State
-  const [loginState, setLoginState] = useState<'logged_out'|'intro'|'welcome'|'profile_signin'|'security_check'|'opening_sequence'|'logged_in'>('intro');
+  const [loginState, setLoginState] = useState<'logged_out'|'intro'|'welcome'|'profile_signin'|'security_check'|'opening_sequence'|'logged_in'|'account_creation'>('intro');
   const [showInactivityModal, setShowInactivityModal] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
