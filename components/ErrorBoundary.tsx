@@ -48,6 +48,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
       );
     }
 
-    return (this.props as any).children;
+    return this.props.children;
   }
 }

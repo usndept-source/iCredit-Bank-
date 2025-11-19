@@ -25,8 +25,8 @@ import { CryptoDashboard } from './components/CryptoDashboard.tsx';
 import { ServicesDashboard } from './components/ServicesDashboard.tsx';
 import { TravelCheckIn } from './components/TravelCheckIn.tsx';
 import { PlatformFeatures } from './components/PlatformFeatures.tsx';
-// FIX: Updated import to tasks.tsx (camelCase) to match file name found by compiler and fix casing error
-import { Tasks } from './components/tasks.tsx';
+// FIX: Corrected import casing for Tasks component to Tasks.tsx
+import { Tasks } from './components/Tasks.tsx';
 import { Flights } from './components/Flights.tsx';
 import { Utilities } from './components/Utilities.tsx';
 import { Integrations } from './components/Integrations.tsx';
