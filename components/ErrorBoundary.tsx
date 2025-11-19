@@ -1,5 +1,5 @@
 
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { ErrorInfo, ReactNode } from 'react';
 import { ICreditUnionLogo } from './Icons.tsx';
 
 interface ErrorBoundaryProps {
@@ -10,7 +10,7 @@ interface State {
   hasError: boolean;
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
   public state: State = { hasError: false };
 
   constructor(props: ErrorBoundaryProps) {

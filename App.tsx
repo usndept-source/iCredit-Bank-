@@ -1,4 +1,5 @@
 
+
 // FIX: Import `useRef` from React to resolve 'Cannot find name' errors.
 // FIX: Import `useMemo` from React to resolve 'useMemo is not defined' error.
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
@@ -26,7 +27,7 @@ import { ServicesDashboard } from './components/ServicesDashboard.tsx';
 import { TravelCheckIn } from './components/TravelCheckIn.tsx';
 import { PlatformFeatures } from './components/PlatformFeatures.tsx';
 // FIX: Updated import casing to match file system/compiler expectation.
-import { Tasks } from './components/tasks.tsx';
+import { Tasks } from './components/Tasks.tsx';
 import { Flights } from './components/Flights.tsx';
 import { Utilities } from './components/Utilities.tsx';
 import { Integrations } from './components/Integrations.tsx';

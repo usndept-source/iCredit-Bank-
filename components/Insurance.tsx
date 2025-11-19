@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
-import { InsuranceProduct, NotificationType } from '../types';
-import { getInsuranceProductDetails } from '../services/geminiService';
+import { InsuranceProduct, NotificationType } from '../types.ts';
+import { getInsuranceProductDetails } from '../services/geminiService.ts';
 // FIX: Add missing icons
-import { DevicePhoneMobileIcon, GlobeAltIcon, ShieldCheckIcon, SpinnerIcon, InfoIcon, CheckCircleIcon } from './Icons';
+import { DevicePhoneMobileIcon, GlobeAltIcon, ShieldCheckIcon, SpinnerIcon, InfoIcon, CheckCircleIcon } from './Icons.tsx';
 
 const InsuranceProductCard: React.FC<{ product: InsuranceProduct; addNotification: (type: NotificationType, title: string, message: string) => void; }> = ({ product, addNotification }) => {
     const [quoteStatus, setQuoteStatus] = useState<'idle' | 'requesting' | 'requested'>('idle');
@@ -103,3 +104,27 @@ export const Insurance: React.FC<{ addNotification: (type: NotificationType, tit
         <div className="space-y-8">
             <div>
                 <h2 className="text-2xl font-bold text-slate-800">Insurance & Protection</h2>
+                <p className="text-sm text-slate-500 mt-1">Protect what matters most with our comprehensive coverage plans.</p>
+            </div>
+
+            {isLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <InsuranceSkeletonLoader />
+                    <InsuranceSkeletonLoader />
+                    <InsuranceSkeletonLoader />
+                </div>
+            ) : isError ? (
+                 <div className="p-8 text-center bg-slate-200 rounded-2xl shadow-digital text-slate-500">
+                    <InfoIcon className="w-12 h-12 mx-auto mb-2 text-slate-400" />
+                    <p>Unable to load insurance products at the moment.</p>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {products.map((product, index) => (
+                        <InsuranceProductCard key={index} product={product} addNotification={addNotification} />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};

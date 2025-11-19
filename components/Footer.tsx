@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { View } from '../types.ts';
 import {
@@ -18,6 +19,13 @@ interface FooterProps {
     openLegalModal: (title: string; content: string) => void;
 }
 
+interface DownloadButtonProps {
+    icon: React.ReactNode;
+    store: string;
+    title: string;
+    href: string;
+}
+
 const FooterLink: React.FC<{ onClick: () => void; children: React.ReactNode }> = ({ onClick, children }) => (
     <li className="group">
         <button onClick={onClick} className="inline-block transition-all duration-200 group-hover:text-primary-300 group-hover:translate-x-1">
@@ -26,7 +34,7 @@ const FooterLink: React.FC<{ onClick: () => void; children: React.ReactNode }> =
     </li>
 );
 
-const DownloadButton: React.FC<{ icon: React.ReactNode; store: string; title: string; href: string }> = ({ icon, store, title, href }) => (
+const DownloadButton: React.FC<DownloadButtonProps> = ({ icon, store, title, href }) => (
     <a href={href} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors w-44 shadow-md">
         {icon}
         <div className="text-left">
@@ -35,7 +43,6 @@ const DownloadButton: React.FC<{ icon: React.ReactNode; store: string; title: st
         </div>
     </a>
 );
-
 
 export const Footer: React.FC<FooterProps> = ({ setActiveView, onOpenSendMoneyFlow, openLegalModal }) => {
 
